@@ -10,10 +10,11 @@ class MenuController
   def main_menu
     puts "Main Menu - #{address_book.entries.count} entries"
     puts "1 - View all entries"
-    puts "2 - Create an entry"
-    puts "3 - Search for an entry"
-    puts "4 - Import entries from a CSV"
-    puts "5 - Exit"
+    puts "2 - View entry number n"
+    puts "3 - Create an entry"
+    puts "4 - Search for an entry"
+    puts "5 - Import entries from a CSV"
+    puts "6 - Exit"
     print "Enter your selection:"
 
     selection = gets.to_i
@@ -38,6 +39,10 @@ class MenuController
       main_menu
     when 5
       system "clear"
+      view_entry_submenu
+      main_menu
+    when 6
+      system "clear"
       puts "Good-bye"
       exit(0)
     else
@@ -48,7 +53,7 @@ class MenuController
   end
 
   def view_all_entries
-    address_book.entries.each do |entry|
+    @address_book.entries.each do |entry|
       system "clear"
       puts entry.to_s
       entry_submenu(entry)
@@ -68,7 +73,7 @@ class MenuController
     print "Email: "
     email = gets.chomp
 
-    address_book.add_entry(name, phone, email)
+    @address_book.add_entry(name, phone, email)
 
     system "clear"
     puts "New entry created"
@@ -100,5 +105,37 @@ class MenuController
       puts "#{selection} is not a valid input"
       entry_submenu(entry)
     end
-  end 
+  end
+
+  def view_entry_submenu
+    # need contingency for no entries
+    system "clear"
+    puts "Enter entry number: "
+    selection = gets.chomp.to_i
+
+    unless @address_book.entries.count == 0
+      if selection <= @address_book.entries.count
+        puts @address_book.entries[selection-1]
+        puts "Press enter to return to the main menu"
+        gets.chomp
+        system "clear"
+      else
+        puts "#{selection} is not a valid input."
+        view_entry_submenu
+      end
+    end
+  end
+  # origial code
+  #   unless @address_book.entries.count == 0
+  #     if entry_number <= @address_book.entries.count
+  #       system "clear"
+  #       puts @address_book.entries[selection-1]
+  #       main_menu
+  #     else
+  #       system "clear"
+  #       puts "#{selection} is not a valid input"
+  #       view_entry_number
+  #     end
+  #   end
+  # end
 end
