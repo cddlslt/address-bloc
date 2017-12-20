@@ -28,19 +28,19 @@ class MenuController
       main_menu
     when 2
       system "clear"
-      create_entry
+      view_entry_submenu
       main_menu
     when 3
       system "clear"
-      search_entries
+      create_entry
       main_menu
     when 4
       system "clear"
-      read_csv
+      search_entries
       main_menu
     when 5
       system "clear"
-      view_entry_submenu
+      read_csv
       main_menu
     when 6
       system "clear"
